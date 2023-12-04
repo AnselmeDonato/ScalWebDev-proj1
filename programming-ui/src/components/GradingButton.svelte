@@ -1,15 +1,16 @@
 <script>
-  import { userUuid } from "../stores/stores.js";
-  
-  const doSimpleGradingDemo = async () => {
-    const data = {
-      user: $userUuid,
-      code: `def hello():
-  return "helo world!"
-`,
-    };
-    
-    const response = await fetch("/api/grade", {
+  import { userUuid, code } from "../stores/stores.js";
+
+	const submitCode = async () => {
+
+		$code = document.getElementById("codeTextArea").value; 
+
+		const data = {
+			user: $userUuid, 
+			code: $code
+		}
+
+		const response = await fetch("/api/grade", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -20,12 +21,21 @@
     const jsonData = await response.json();
     console.log(jsonData);
     alert(JSON.stringify(jsonData));
-  };
+	}; 
 </script>
 
-<button
-  class="bg-blue-500 hover:bg-blue-700 text-white font-bold p-4 rounded m-4"
-  on:click={doSimpleGradingDemo}
->
-  Do grading demo!
-</button>
+<div class="col-span-full">
+	<label for="codeTextArea" class="block text-sm font-medium leading-6 text-gray-900">Code</label>
+	<div class="mt-2">
+		<textarea id="codeTextArea" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">{$code}</textarea>
+	</div>
+	<p class="mt-3 text-sm leading-6 text-gray-600">Write Python code to solve the problem in the handout.</p>
+</div>
+
+<div class="mt-6 flex items-center justify-end gap-x-6">
+	<button 
+		type="submit" 
+		class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+		on:click={submitCode}
+		>Submit</button>
+</div>
