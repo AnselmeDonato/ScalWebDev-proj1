@@ -1,0 +1,12 @@
+---
+import Layout from "../layout/Layout.astro";
+import GradingButton from "../components/GradingButton.svelte";
+import Handout from "../components/Handout.svelte";
+import CodeTextArea from "../components/CodeTextArea.svelte";
+---
+
+<Layout>
+  <Handout text="This is a test handout" />
+  <GradingButton client:only={"svelte"} />
+	<CodeTextArea />
+</Layout>
