@@ -1,6 +1,8 @@
 <script>
   import { userUuid, code } from "../stores/stores.js";
 
+	let result = null; 
+
 	const submitCode = async () => {
 
 		$code = document.getElementById("codeTextArea").value; 
@@ -19,19 +21,22 @@
     });
 
     const jsonData = await response.json();
-    console.log(jsonData);
-    alert(JSON.stringify(jsonData));
+    // console.log(jsonData);
+    // alert(JSON.stringify(jsonData));
+		result = jsonData.result; 
 	}; 
 </script>
 
+<!-- Text Area for the code  -->
 <div class="col-span-full">
 	<label for="codeTextArea" class="block text-sm font-medium leading-6 text-gray-900">Code</label>
 	<div class="mt-2">
-		<textarea id="codeTextArea" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">{$code}</textarea>
+		<textarea id="codeTextArea" rows="3" class="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">{$code}</textarea>
 	</div>
 	<p class="mt-3 text-sm leading-6 text-gray-600">Write Python code to solve the problem in the handout.</p>
 </div>
 
+<!-- Submit button  -->
 <div class="mt-6 flex items-center justify-end gap-x-6">
 	<button 
 		type="submit" 
@@ -39,3 +44,9 @@
 		on:click={submitCode}
 		>Submit</button>
 </div>
+
+<!-- Submission status -->
+{#if result}
+	<h2 class="text-base font-semibold leading-7 text-gray-900">Submission result:</h2>
+	<p> {result} </p>
+{/if}
