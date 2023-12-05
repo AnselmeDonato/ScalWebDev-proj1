@@ -18,9 +18,6 @@ let localCode = localStorage.getItem("code");
 const code = writable(localCode || ""); 
 
 // Update the local storage when the stored value changes
-code.subscribe((value) => {
-	console.log("JE?"); 
-	console.log(value); 
-	localStorage.setItem("code", value)}); 
+code.subscribe((value) => {localStorage.setItem("code", value)}); 
 
 export {userUuid, code}

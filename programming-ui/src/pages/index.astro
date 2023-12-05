@@ -5,6 +5,6 @@ import Handout from "../components/Handout.svelte";
 ---
 
 <Layout>
-  <Handout text="This is a test handout" />
+  <Handout client:only={"svelte"} />
   <GradingButton client:only={"svelte"} />
 </Layout>

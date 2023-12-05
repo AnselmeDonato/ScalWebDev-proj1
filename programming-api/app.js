@@ -1,26 +1,46 @@
-import * as programmingAssignmentService from "./services/programmingAssignmentService.js";
+import * as assignmentController from "./controllers/assignmentController.js"; 
+import * as gradingController from "./controllers/gradingController.js"; 
 import { serve } from "./deps.js";
-import { sql } from "./database/database.js";
+
+const urlMapping = [
+	// Hello 
+	{
+	  method: "GET",
+	  pattern: new URLPattern({ pathname: "/" }),
+	  fn: () => new Response("Hello World", { status: 200 }),
+	},
+
+	// Get handout
+	{
+	  method: "GET",
+	  pattern: new URLPattern({ pathname: "/handout" }),
+	  fn: assignmentController.getHandout,
+	},
+
+	// Grade
+	{
+	  method: "POST",
+	  pattern: new URLPattern({ pathname: "/grade" }),
+	  fn: gradingController.gradeSubmission,
+	},
+];
 
 const handleRequest = async (request) => {
-  const programmingAssignments = await programmingAssignmentService.findAll();
-
-  const requestData = await request.json();
-  const testCode = programmingAssignments[0]["test_code"];
-  const data = {
-    testCode: testCode,
-    code: requestData.code,
-  };
-
-  const response = await fetch("http://grader-api:7000/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-
-  return response;
+	const mapping = urlMapping.find(
+	  (um) => um.method === request.method && um.pattern.test(request.url)
+	);
+  
+	if (!mapping) {
+	  return new Response("Not found", { status: 404 });
+	}
+  
+	const mappingResult = mapping.pattern.exec(request.url);
+	try {
+    return await mapping.fn(request, mappingResult);
+	} catch (e) {
+	  console.log(e);
+	  return new Response(e.stack, { status: 500 }); 
+	}
 };
 
 const portConfig = { port: 7777, hostname: "0.0.0.0" };
