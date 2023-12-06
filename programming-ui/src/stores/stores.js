@@ -1,6 +1,6 @@
 import { readable, writable } from "svelte/store";
 
-// User Id
+// ----------- User Id ----------- //
 let user = localStorage.getItem("userUuid");
 
 if (!user) {
@@ -10,24 +10,46 @@ if (!user) {
 
 const userUuid = readable(user);
 
-// User code
-// Get the value of the storage code 
-let localCode = localStorage.getItem("code"); 
 
-// Set the stored velue (default: "")
-const code = writable(localCode || ""); 
+
+// ----------- Assignment ----------- //
+let storedAssignment = localStorage.getItem("assignment"); 
+
+const assignment = writable(storedAssignment || {}); 
+
+// Update the local storage when the stored value changes
+assignment.subscribe((value) => {localStorage.setItem("assignment", value)}); 
+
+
+
+// ----------- Handout ----------- //
+let storedHandout = localStorage.getItem("handout"); 
+
+const handout = writable(storedHandout || ""); 
+
+// Update the local storage when the stored value changes
+handout.subscribe((value) => {localStorage.setItem("handout", value)}); 
+
+
+
+// ----------- Code written by the user ----------- //
+// To avoid the frustration of seeing your code erased when refreshing the page,
+// (which happened to me many times) the code is also stored locally
+let storedCode = localStorage.getItem("code"); 
+
+const code = writable(storedCode || ""); 
 
 // Update the local storage when the stored value changes
 code.subscribe((value) => {localStorage.setItem("code", value)}); 
 
-// Assignment id
-// Get the value of the storage id 
-let localAssignmentId = localStorage.getItem("assignmentId"); 
 
-// Set the stored velue (default: "")
-const assignmentId = writable(localAssignmentId || ""); 
+
+// ----------- Assignment ID ----------- //
+let storedAssignmentId = localStorage.getItem("assignmentId"); 
+
+const assignmentId = writable(storedAssignmentId || 1); 
 
 // Update the local storage when the stored value changes
 assignmentId.subscribe((value) => {localStorage.setItem("assignmentId", value)}); 
 
-export {userUuid, code, assignmentId}
+export {userUuid, code, assignmentId, handout, assignment}
