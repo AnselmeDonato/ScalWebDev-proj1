@@ -1,5 +1,5 @@
 <script>
-  import { userUuid, code, assignment } from "../stores/stores.js";
+  import { userUuid, code, assignment, gradingResult} from "../stores/stores.js";
 
 	let result = null; 
 	let waitingForResult = false; 
@@ -23,7 +23,7 @@
     });
 
     const jsonData = await response.json();
-		result = jsonData.result; 
+		$gradingResult = jsonData.result; 
 		waitingForResult = false; 
     // alert(JSON.stringify(jsonData));
 	}; 
@@ -53,9 +53,3 @@
 			>Grading</button>
 	{/if}
 </div>
-
-<!-- Submission status -->
-{#if result}
-	<h2 class="text-base font-semibold leading-7 text-gray-900">Submission result:</h2>
-	<p> {result} </p>
-{/if}

@@ -35,4 +35,12 @@ const code = writable(storedCode || "");
 code.subscribe((value) => {localStorage.setItem("code", value)}); 
 
 
-export {userUuid, code, assignment}
+
+
+// ----------------------- Grading Result ----------------------- //
+// Note: the grading result is not stored in the localStorage 
+// (in my opinionm, in this context this is not a feature the user would want)
+
+const gradingResult = writable(""); 
+
+export {userUuid, code, assignment, gradingResult}

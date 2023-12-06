@@ -16,7 +16,7 @@
 </script>
 
 <div class="p-4 mb-4 flex flex-col">
-	<h2 class="text-base font-semibold leading-7 text-gray-900">Your mission, should you choose to accept it: {$assignment.title}</h2>
+	<h2 class="text-base font-semibold leading-7 text-gray-900">Current assignment: {$assignment.title}</h2>
 	
 	<p class="rounded-md outline outline-1 outline-indigo-600 px-3 py-2 text-sm shadow-sm">
 		{$assignment.handout}

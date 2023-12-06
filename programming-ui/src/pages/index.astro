@@ -1,10 +1,12 @@
 ---
 import Layout from "../layout/Layout.astro";
-import GradingButton from "../components/UserCodeArea.svelte";
-import Handout from "../components/Handout.svelte";
+import Assignment from "../components/Assignment.svelte";
+import CodingArea from "../components/CodingArea.svelte";
+import GradingResultsArea from "../components/GradingResultsArea.svelte";
 ---
 
 <Layout>
-  <Handout client:only={"svelte"} />
-  <GradingButton client:only={"svelte"} />
+  <Assignment client:only={"svelte"} />
+  <CodingArea client:only={"svelte"} />
+  <GradingResultsArea client:only={"svelte"} />
 </Layout>
