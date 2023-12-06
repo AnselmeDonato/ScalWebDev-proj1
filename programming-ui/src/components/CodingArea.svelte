@@ -41,7 +41,7 @@
 </div>
 
 <!-- Submit button  -->
-<div class="mt-6 flex items-center justify-end gap-x-6">
+<div class="mt-6 flex items-center gap-x-6">
 	{#if ! waitingForResult}
 		<button 
 			type="submit" 

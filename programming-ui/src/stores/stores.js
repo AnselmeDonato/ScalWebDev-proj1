@@ -16,12 +16,13 @@ const userUuid = readable(user);
 // ----------------------- Assignment ----------------------- //
 let storedAssignment = localStorage.getItem("assignment"); 
 
-const assignment = writable(storedAssignment || {}); 
+const assignment = writable(JSON.parse(storedAssignment) || {}); 
 
 // Update the local storage when the stored value changes
-assignment.subscribe((value) => {localStorage.setItem("assignment", value)}); 
+// The assignment is a JSON, stored locally as a string 
+assignment.subscribe((json) => {localStorage.setItem("assignment", JSON.stringify(json))}); 
 
-
+const changeAssignment = writable(false); 
 
 
 // ----------------------- Code written by the user ----------------------- //
@@ -43,4 +44,4 @@ code.subscribe((value) => {localStorage.setItem("code", value)});
 
 const gradingResult = writable(""); 
 
-export {userUuid, code, assignment, gradingResult}
+export {userUuid, code, assignment, gradingResult, changeAssignment}

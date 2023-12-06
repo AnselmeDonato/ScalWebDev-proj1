@@ -1,20 +1,31 @@
 <script>
-	import { assignment } from "../stores/stores.js";
+	// import { subscribe } from "svelte/internal";
+	import { assignment, changeAssignment } from "../stores/stores.js";
 
 	// 
 	// Fetch the assignment corresponding to the given id and updates the locally stored assignment accordingly
 	// 
-	const fetchAssignmentById = async (id) => {
+	export async function fetchAssignmentById(id) {
 		const response = await fetch(`http://localhost:7800/api/assignment/${id}`); 
-		$assignment = await response.json(); 
+		const json = await response.json(); 
+		$assignment = json; 
+		// $assignment = JSON.stringify(json); 
 	}; 
 
 	// Fetch the first assignment if the stored assignment is empty
 	// (we can check if stored assignment empty by e.g checking if it has a title property)
 	if(!$assignment.hasOwnProperty("title")){
 		fetchAssignmentById(1); 
+		console.log("Here"); 
 	}
 
+	// React to change assignment 
+	changeAssignment.subscribe((change) => {
+		if(change){
+			fetchAssignmentById($assignment.id + 1); 
+			$changeAssignment = false; 
+		}
+	}); // logs '0'
 </script>
 
 <div class="p-4 mb-4 flex flex-col">
