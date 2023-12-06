@@ -10,7 +10,7 @@ const redirectTo = (path) => {
 		"Location": path,
 	  },
 	});
-  };
+};
   
 
 export {responseDetails, redirectTo}; 

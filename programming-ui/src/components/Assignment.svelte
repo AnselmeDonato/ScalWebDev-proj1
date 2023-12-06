@@ -1,7 +1,9 @@
 <script>
 	import { assignment } from "../stores/stores.js";
 
-	// Fetch the assignment corresponding to the stored id
+	// 
+	// Fetch the assignment corresponding to the given id and updates the locally stored assignment accordingly
+	// 
 	const fetchAssignmentById = async (id) => {
 		const response = await fetch(`http://localhost:7800/api/assignment/${id}`); 
 		$assignment = await response.json(); 

@@ -64,14 +64,8 @@ const handleRequest = async (request) => {
   try {
     const requestData = await request.json();
 
-    console.log("Request data:");
-    console.log(requestData);
-
     const code = requestData.code;
     const testCode = requestData.testCode;
-
-		console.log("Here"); 
-		console.log(testCode); 
 
     result = await grade(code, testCode);
   } catch (e) {

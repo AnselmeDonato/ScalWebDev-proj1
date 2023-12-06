@@ -3,14 +3,14 @@ import * as gradingController from "./controllers/gradingController.js";
 import { serve } from "./deps.js";
 
 const urlMapping = [
-	// Hello 
+	// Hello (for testing purpose)
 	{
 	  method: "GET",
 	  pattern: new URLPattern({ pathname: "/" }),
 	  fn: () => new Response("Hello World", { status: 200 }),
 	},
 
-	// Get handout
+	// Get assignment
 	{
 	  method: "GET",
 	  pattern: new URLPattern({ pathname: "/assignment/:id" }),

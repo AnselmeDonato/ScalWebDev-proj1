@@ -2,9 +2,7 @@ import * as assignments from "../services/programmingAssignmentService.js";
 
 const gradeSubmission = async (request, _mappingResult) => {
   const requestData = await request.json();
-	
   const assignment = await assignments.findById(requestData.assignmentId);
-
   const data = {
     testCode: assignment.test_code,
     code: requestData.code,
@@ -17,9 +15,6 @@ const gradeSubmission = async (request, _mappingResult) => {
     },
     body: JSON.stringify(data),
   });
-
-	console.log("Response"); 
-	console.log(response); 
 
   return response;
 };

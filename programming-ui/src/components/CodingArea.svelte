@@ -1,9 +1,12 @@
 <script>
   import { userUuid, code, assignment, gradingResult} from "../stores/stores.js";
 
-	let result = null; 
+	// Used to deactivate the "submit" button while waiting for a response from the grading system 
 	let waitingForResult = false; 
 
+	// 
+	// Submit the written code to the grading system and updates the gradingResult store accordingly
+	// 
 	const submitCode = async () => {
 		waitingForResult = true; 
 		$code = document.getElementById("codeTextArea").value; 
@@ -25,7 +28,6 @@
     const jsonData = await response.json();
 		$gradingResult = jsonData.result; 
 		waitingForResult = false; 
-    // alert(JSON.stringify(jsonData));
 	}; 
 </script>
 
