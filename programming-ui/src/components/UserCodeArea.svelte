@@ -1,5 +1,5 @@
 <script>
-  import { userUuid, code, assignmentId } from "../stores/stores.js";
+  import { userUuid, code, assignment } from "../stores/stores.js";
 
 	let result = null; 
 	let waitingForResult = false; 
@@ -11,7 +11,7 @@
 		const data = {
 			user: $userUuid, 
 			code: $code, 
-			assignmentId: $assignmentId
+			assignmentId: $assignment.id
 		}
 
 		const response = await fetch("/api/grade", {

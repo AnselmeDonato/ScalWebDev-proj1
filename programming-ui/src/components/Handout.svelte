@@ -1,14 +1,16 @@
 <script>
 	import { assignment } from "../stores/stores.js";
 
-	const fetchHandout = async () => {
-		const response = await fetch("http://localhost:7800/api/handout"); 
+	// Fetch the assignment corresponding to the stored id
+	const fetchAssignmentById = async (id) => {
+		const response = await fetch(`http://localhost:7800/api/assignment/${id}`); 
 		$assignment = await response.json(); 
 	}; 
 
-	// Check that the assignment is not empty (e.g by checking it has a title)
+	// Fetch the first assignment if the stored assignment is empty
+	// (we can check if stored assignment empty by e.g checking if it has a title property)
 	if(!$assignment.hasOwnProperty("title")){
-		fetchHandout(); 
+		fetchAssignmentById(1); 
 	}
 
 </script>
@@ -21,3 +23,4 @@
 	</p>
 
 </div>
+

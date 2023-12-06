@@ -13,8 +13,8 @@ const urlMapping = [
 	// Get handout
 	{
 	  method: "GET",
-	  pattern: new URLPattern({ pathname: "/handout" }),
-	  fn: assignmentController.getHandout,
+	  pattern: new URLPattern({ pathname: "/assignment/:id" }),
+	  fn: assignmentController.getAssignmentById,
 	},
 
 	// Grade
