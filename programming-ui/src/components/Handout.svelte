@@ -1,4 +1,6 @@
 <script>
+	import { assignmentId } from "../stores/stores.js";
+
 	let id = -1; 
 	let handout = ""; 
 	let title = ""; 
@@ -6,7 +8,7 @@
 	const getHandout = async () => {
 		const response = await fetch("http://localhost:7800/api/handout"); 
 		const json = await response.json(); 
-		id = json["id"]; 
+		$assignmentId = json["id"]; 
 		handout = json["handout"]; 
 		title = json["title"]; 
 	}; 

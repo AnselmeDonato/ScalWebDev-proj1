@@ -5,7 +5,8 @@ const findAll = async () => {
 };
 
 const findById = async (id) => {
-  return await sql`SELECT * FROM programming_assignments WHERE id = ${ id };`;
+  const results = await sql`SELECT * FROM programming_assignments WHERE id = ${ id };`;
+	return results[0]; 
 };
 
 export { findAll, findById };

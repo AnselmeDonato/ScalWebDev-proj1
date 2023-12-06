@@ -20,4 +20,14 @@ const code = writable(localCode || "");
 // Update the local storage when the stored value changes
 code.subscribe((value) => {localStorage.setItem("code", value)}); 
 
-export {userUuid, code}
+// Assignment id
+// Get the value of the storage id 
+let localAssignmentId = localStorage.getItem("assignmentId"); 
+
+// Set the stored velue (default: "")
+const assignmentId = writable(localAssignmentId || ""); 
+
+// Update the local storage when the stored value changes
+assignmentId.subscribe((value) => {localStorage.setItem("assignmentId", value)}); 
+
+export {userUuid, code, assignmentId}

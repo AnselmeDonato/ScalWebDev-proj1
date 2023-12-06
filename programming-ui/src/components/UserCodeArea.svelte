@@ -1,15 +1,17 @@
 <script>
-  import { userUuid, code } from "../stores/stores.js";
+  import { userUuid, code, assignmentId } from "../stores/stores.js";
 
 	let result = null; 
+	let waitingForResult = false; 
 
 	const submitCode = async () => {
-
+		waitingForResult = true; 
 		$code = document.getElementById("codeTextArea").value; 
 
 		const data = {
 			user: $userUuid, 
-			code: $code
+			code: $code, 
+			assignmentId: $assignmentId
 		}
 
 		const response = await fetch("/api/grade", {
@@ -21,9 +23,9 @@
     });
 
     const jsonData = await response.json();
-    // console.log(jsonData);
-    // alert(JSON.stringify(jsonData));
 		result = jsonData.result; 
+		waitingForResult = false; 
+    // alert(JSON.stringify(jsonData));
 	}; 
 </script>
 
@@ -38,11 +40,18 @@
 
 <!-- Submit button  -->
 <div class="mt-6 flex items-center justify-end gap-x-6">
-	<button 
-		type="submit" 
-		class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-		on:click={submitCode}
-		>Submit</button>
+	{#if ! waitingForResult}
+		<button 
+			type="submit" 
+			class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+			on:click={submitCode}
+			>Submit</button>
+	{:else}
+		<button 
+			type="submit" 
+			class="rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+			>Grading</button>
+	{/if}
 </div>
 
 <!-- Submission status -->
