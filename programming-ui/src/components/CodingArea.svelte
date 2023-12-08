@@ -1,36 +1,47 @@
 <script>
-  import { userUuid, code, assignment, gradingResult} from "../stores/stores.js";
+  import { userUuid, code, assignment, gradingResult, correct} from "../stores/stores.js";
 
 	// Used to deactivate the "submit" button while waiting for a response from the grading system 
-	let waitingForResult = false; 
+	let pendingSubmission = false; 
 
 	// 
 	// Submit the written code to the grading system and updates the gradingResult store accordingly
 	// 
 	const submitCode = async () => {
-		const written_code = document.getElementById("codeTextArea").value;
-		if(written_code != ""){
-			$code = written_code; 
-			waitingForResult = true; 
-	
-			const data = {
-				uuid: $userUuid, 
-				code: $code, 
-				assignmentId: $assignment.id
-			}
-	
-			const response = await fetch("/api/submit", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(data),
-			});
-	
-			const jsonData = await response.json();
-			$gradingResult = jsonData.grader_feedback; 
-			waitingForResult = false; 
+		const codeTextArea = document.getElementById("codeTextArea").value;
+
+		// Early return if textArea empty 
+		if(codeTextArea === ""){
+			return 0; 
 		} 
+
+		// Prepare data for the request 
+		$code = codeTextArea; 
+		pendingSubmission = true; 
+		const submissionData = {
+			uuid: $userUuid, 
+			code: $code, 
+			assignmentId: $assignment.id
+		}
+		
+		// Request to submit the code 
+		const submissionResponse = await fetch("/api/submit", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(submissionData),
+		});
+
+		// Get the submission results and update store
+		const responseJSON = await submissionResponse.json();
+		$gradingResult = responseJSON.grader_feedback;
+		if(responseJSON.correct) {
+			$correct = true; 
+		}
+
+		// Process is done: submission is no longer pending
+		pendingSubmission = false; 
 	}; 
 </script>
 
@@ -43,9 +54,9 @@
 	<p class="mt-3 text-sm leading-6 text-gray-600">Write Python code to solve the problem in the handout.</p>
 </div>
 
-<!-- Submit button  -->
+<!-- Submit button, only activated if there is no pending submission  -->
 <div class="mt-6 flex items-center gap-x-6">
-	{#if ! waitingForResult}
+	{#if ! pendingSubmission}
 		<button 
 			type="submit" 
 			class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"

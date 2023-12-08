@@ -44,4 +44,9 @@ code.subscribe((value) => {localStorage.setItem("code", value)});
 
 const gradingResult = writable(""); 
 
-export {userUuid, code, assignment, gradingResult, changeAssignment}
+
+// ----------------------- Submission correctness ----------------------- //
+
+const correct = writable(false); 
+
+export {userUuid, code, assignment, gradingResult, changeAssignment, correct}

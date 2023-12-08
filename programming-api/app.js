@@ -14,10 +14,10 @@ const urlMapping = [
 	{
 	  method: "GET",
 	  pattern: new URLPattern({ pathname: "/assignment/:id" }),
-	  fn: assignmentController.getAssignmentById,
+	  fn: assignmentController.findById,
 	},
 
-	// Grade
+	// Handle submission
 	{
 	  method: "POST",
 	  pattern: new URLPattern({ pathname: "/submit" }),
