@@ -20,7 +20,7 @@ const urlMapping = [
 	// Grade
 	{
 	  method: "POST",
-	  pattern: new URLPattern({ pathname: "/grade" }),
+	  pattern: new URLPattern({ pathname: "/submit" }),
 	  fn: gradingController.gradeSubmission,
 	},
 ];

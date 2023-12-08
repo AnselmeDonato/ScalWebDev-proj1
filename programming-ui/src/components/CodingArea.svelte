@@ -8,26 +8,29 @@
 	// Submit the written code to the grading system and updates the gradingResult store accordingly
 	// 
 	const submitCode = async () => {
-		waitingForResult = true; 
-		$code = document.getElementById("codeTextArea").value; 
-
-		const data = {
-			user: $userUuid, 
-			code: $code, 
-			assignmentId: $assignment.id
-		}
-
-		const response = await fetch("/api/grade", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    const jsonData = await response.json();
-		$gradingResult = jsonData.result; 
-		waitingForResult = false; 
+		const written_code = document.getElementById("codeTextArea").value;
+		if(written_code != ""){
+			$code = written_code; 
+			waitingForResult = true; 
+	
+			const data = {
+				user: $userUuid, 
+				code: $code, 
+				assignmentId: $assignment.id
+			}
+	
+			const response = await fetch("/api/submit", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(data),
+			});
+	
+			const jsonData = await response.json();
+			$gradingResult = jsonData.result; 
+			waitingForResult = false; 
+		} 
 	}; 
 </script>
 
