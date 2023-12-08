@@ -14,7 +14,7 @@
 			waitingForResult = true; 
 	
 			const data = {
-				user: $userUuid, 
+				uuid: $userUuid, 
 				code: $code, 
 				assignmentId: $assignment.id
 			}
@@ -28,7 +28,7 @@
 			});
 	
 			const jsonData = await response.json();
-			$gradingResult = jsonData.result; 
+			$gradingResult = jsonData.grader_feedback; 
 			waitingForResult = false; 
 		} 
 	}; 

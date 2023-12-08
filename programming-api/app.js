@@ -1,5 +1,5 @@
 import * as assignmentController from "./controllers/assignmentController.js"; 
-import * as gradingController from "./controllers/gradingController.js"; 
+import * as submissionsController from "./controllers/submissionController.js"; 
 import { serve } from "./deps.js";
 
 const urlMapping = [
@@ -21,7 +21,7 @@ const urlMapping = [
 	{
 	  method: "POST",
 	  pattern: new URLPattern({ pathname: "/submit" }),
-	  fn: gradingController.gradeSubmission,
+	  fn: submissionsController.processSubmission,
 	},
 ];
 
