@@ -9,4 +9,12 @@ const findById = async (_request, mappingResult) => {
 	return response; 
 };
 
-export { findById }; 
+const findForUuid = async (_request, mappingResult) => {
+	const uuid = mappingResult.pathname.groups.uuid;
+  const assignment = await assignmentsService.findForUuid(uuid);
+  const response = new Response(JSON.stringify(assignment), responseDetails);
+
+	return response; 
+}
+
+export { findById, findForUuid }; 

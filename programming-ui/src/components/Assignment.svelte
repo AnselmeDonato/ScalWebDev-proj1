@@ -1,9 +1,9 @@
 <script>
 	// import { subscribe } from "svelte/internal";
-	import { assignment, changeAssignment } from "../stores/stores.js";
+	import { assignment, changeAssignment, userUuid } from "../stores/stores.js";
 
 	// 
-	// Fetch the assignment corresponding to the given id and updates the locally stored assignment accordingly
+	// Fetch the assignment corresponding to the given id (and updates the locally stored assignment accordingly)
 	// 
 	export async function fetchAssignmentById(id) {
 		const response = await fetch(`http://localhost:7800/api/assignment/${id}`); 
@@ -11,16 +11,25 @@
 		$assignment = responseJSON; 
 	}; 
 
+	// 
+	// Fetch the first not done assignment for the user (and updates the locally stored assignment accordingly)
+	// 
+	export async function fetchAssignmentForUser() {
+		const response = await fetch(`http://localhost:7800/api/user/${$userUuid}`); 
+		const responseJSON = await response.json(); 
+		$assignment = responseJSON; 
+	}; 
+
 	// Fetch the first assignment if the stored assignment is empty
 	// (we can check if stored assignment empty by e.g checking if it has a title property)
 	if(!$assignment.hasOwnProperty("title")){
-		fetchAssignmentById(1); 
+		fetchAssignmentForUser(); 
 	}
 
 	// React to change assignment 
 	changeAssignment.subscribe((change) => {
 		if(change){
-			fetchAssignmentById($assignment.id + 1); 
+			fetchAssignmentForUser(); 
 			$changeAssignment = false; 
 		}
 	});

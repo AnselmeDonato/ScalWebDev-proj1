@@ -10,11 +10,18 @@ const urlMapping = [
 	  fn: () => new Response("Hello World", { status: 200 }),
 	},
 
-	// Get assignment
+	// Get assignment (by AssignmentId)
 	{
 	  method: "GET",
 	  pattern: new URLPattern({ pathname: "/assignment/:id" }),
 	  fn: assignmentController.findById,
+	},
+
+	// Get assignment for user
+	{
+	  method: "GET",
+	  pattern: new URLPattern({ pathname: "/user/:uuid" }),
+	  fn: assignmentController.findForUuid,
 	},
 
 	// Handle submission
