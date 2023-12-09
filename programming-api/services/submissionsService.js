@@ -4,12 +4,18 @@ const searchWithAttributes = async (assignment_id, uuid, code) => {
 	return await sql`SELECT * FROM programming_assignment_submissions WHERE user_uuid = ${uuid} AND programming_assignment_id = ${assignment_id} AND code = ${code};`;
 }
 
+const getById = async (id) => {
+	const results = await sql`SELECT * FROM programming_assignment_submissions WHERE id = ${id};`;
+	return results[0]; 
+}
+
 const create = async (assignment_id, uuid, code) => {
-	return await sql`INSERT INTO programming_assignment_submissions (programming_assignment_id, code, user_uuid) VALUES (${ assignment_id }, ${ code }, ${ uuid });`;
+	const results =  await sql`INSERT INTO programming_assignment_submissions (programming_assignment_id, code, user_uuid) VALUES (${ assignment_id }, ${ code }, ${ uuid }) RETURNING *;`;
+	return results[0]; 
 }
 
-const updateSubmissionGrading = async (feedback, correct) => {
-	return await sql`UPDATE programming_assignment_submissions SET grader_feedback = ${feedback}, correct = ${correct}, status = 'processed', last_updated = NOW() RETURNING *;`; 
+const updateSubmissionGrading = async (id, feedback, correct) => {
+	return await sql`UPDATE programming_assignment_submissions SET grader_feedback = ${feedback}, correct = ${correct}, status = 'processed', last_updated = NOW() WHERE id = ${ id };`; 
 }
 
-export { searchWithAttributes, create, updateSubmissionGrading };
+export { searchWithAttributes, create, updateSubmissionGrading, getById };

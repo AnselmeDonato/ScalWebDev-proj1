@@ -9,26 +9,26 @@ const urlMapping = [
 	  pattern: new URLPattern({ pathname: "/" }),
 	  fn: () => new Response("Hello World", { status: 200 }),
 	},
-
-	// Get assignment (by AssignmentId)
-	{
-	  method: "GET",
-	  pattern: new URLPattern({ pathname: "/assignment/:id" }),
-	  fn: assignmentController.findById,
-	},
-
+	
 	// Get assignment for user
 	{
-	  method: "GET",
+		method: "GET",
 	  pattern: new URLPattern({ pathname: "/user/:uuid" }),
 	  fn: assignmentController.findForUuid,
 	},
-
+	
 	// Handle submission
 	{
-	  method: "POST",
+		method: "POST",
 	  pattern: new URLPattern({ pathname: "/submit" }),
 	  fn: submissionsController.processSubmission,
+	},
+	
+	// Get submission by id
+	{
+		method: "GET",
+		pattern: new URLPattern({ pathname: "/submission/:id" }),
+		fn: submissionsController.getSubmissionById,
 	},
 ];
 

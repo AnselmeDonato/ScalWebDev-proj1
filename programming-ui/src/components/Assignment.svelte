@@ -3,15 +3,6 @@
 	import { assignment, changeAssignment, userUuid } from "../stores/stores.js";
 
 	// 
-	// Fetch the assignment corresponding to the given id (and updates the locally stored assignment accordingly)
-	// 
-	export async function fetchAssignmentById(id) {
-		const response = await fetch(`http://localhost:7800/api/assignment/${id}`); 
-		const responseJSON = await response.json(); 
-		$assignment = responseJSON; 
-	}; 
-
-	// 
 	// Fetch the first not done assignment for the user (and updates the locally stored assignment accordingly)
 	// 
 	export async function fetchAssignmentForUser() {

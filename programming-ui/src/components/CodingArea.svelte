@@ -1,5 +1,5 @@
 <script>
-  import { userUuid, code, assignment, gradingResult, correct} from "../stores/stores.js";
+  import { userUuid, code, assignment, submission} from "../stores/stores.js";
 
 	// Used to deactivate the "submit" button while waiting for a response from the grading system 
 	let pendingSubmission = false; 
@@ -34,11 +34,7 @@
 		});
 
 		// Get the submission results and update store
-		const responseJSON = await submissionResponse.json();
-		$gradingResult = responseJSON.grader_feedback;
-		if(responseJSON.correct) {
-			$correct = true; 
-		}
+		$submission = await submissionResponse.json();
 
 		// Process is done: submission is no longer pending
 		pendingSubmission = false; 

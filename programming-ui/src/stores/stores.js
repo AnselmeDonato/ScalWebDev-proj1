@@ -35,18 +35,8 @@ const code = writable(storedCode || "");
 // Update the local storage when the stored value changes
 code.subscribe((value) => {localStorage.setItem("code", value)}); 
 
+// Submission 
 
+const submission = writable(null); 
 
-
-// ----------------------- Grading Result ----------------------- //
-// Note: the grading result is not stored in the localStorage 
-// (in my opinionm, in this context this is not a feature the user would want)
-
-const gradingResult = writable(""); 
-
-
-// ----------------------- Submission correctness ----------------------- //
-
-const correct = writable(false); 
-
-export {userUuid, code, assignment, gradingResult, changeAssignment, correct}
+export {userUuid, code, assignment, changeAssignment, submission}
