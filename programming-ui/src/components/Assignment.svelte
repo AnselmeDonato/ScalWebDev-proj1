@@ -1,10 +1,9 @@
 <script>
-	// import { subscribe } from "svelte/internal";
 	import { assignment, changeAssignment, userUuid } from "../stores/stores.js";
 
-	// 
-	// Fetch the first not done assignment for the user (and updates the locally stored assignment accordingly)
-	// 
+	/** 
+	* Fetch the first not done assignment for the user (and updates the locally stored assignment accordingly)
+	*/ 
 	export async function fetchAssignmentForUser() {
 		const response = await fetch(`http://localhost:7800/api/user/${$userUuid}`); 
 		const responseJSON = await response.json(); 
@@ -17,7 +16,7 @@
 		fetchAssignmentForUser(); 
 	}
 
-	// React to change assignment 
+	// React to changeAssignment = true
 	changeAssignment.subscribe((change) => {
 		if(change){
 			fetchAssignmentForUser(); 

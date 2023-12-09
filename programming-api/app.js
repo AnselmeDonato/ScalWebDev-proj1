@@ -3,21 +3,21 @@ import * as submissionsController from "./controllers/submissionController.js";
 import { serve } from "./deps.js";
 
 const urlMapping = [
-	// Hello (for testing purpose)
+	// Hello World (for testing purpose)
 	{
 	  method: "GET",
 	  pattern: new URLPattern({ pathname: "/" }),
 	  fn: () => new Response("Hello World", { status: 200 }),
 	},
 	
-	// Get assignment for user
+	// Get assignment for a user
 	{
 		method: "GET",
 	  pattern: new URLPattern({ pathname: "/user/:uuid" }),
 	  fn: assignmentController.findForUuid,
 	},
 	
-	// Handle submission
+	// Handle new submission
 	{
 		method: "POST",
 	  pattern: new URLPattern({ pathname: "/submit" }),
@@ -28,7 +28,7 @@ const urlMapping = [
 	{
 		method: "GET",
 		pattern: new URLPattern({ pathname: "/submission/:id" }),
-		fn: submissionsController.getSubmissionById,
+		fn: submissionsController.findById,
 	},
 ];
 

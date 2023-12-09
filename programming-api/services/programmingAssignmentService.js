@@ -22,12 +22,13 @@ const findById = async (id) => {
 const findForUuid = async (uuid) => {
 	var lastCorrectAssignmentId = 0; 
 
-	// Fetch the assignmentId of the last correct submission 
+	// Find the assignmentId of the last correct submission 
   const correctSubmissionsSorted = await sql`SELECT * FROM programming_assignment_submissions WHERE user_uuid = ${ uuid } AND correct = TRUE ORDER BY last_updated DESC NULLS LAST;`;
 	if(correctSubmissionsSorted.length != 0) {
 		lastCorrectAssignmentId = correctSubmissionsSorted[0].programming_assignment_id; 
 	}
 
+	// Return the assignment corresponding to that id
 	return await findById(lastCorrectAssignmentId + 1); 
 };
 

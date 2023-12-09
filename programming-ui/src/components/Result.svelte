@@ -1,6 +1,14 @@
 <script>
-  import { code, changeAssignment, submission} from "../stores/stores.js";
+	import { code, changeAssignment, submission} from "../stores/stores.js";
 	
+	/**
+	 * Utility function to sleep
+	 */
+	const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+	
+	/**
+	 * Trigger fetch new assignment 
+	 */
 	const triggerNextAssignment = async () => {
 		// Updating changeAssignment will trigger the fetch for the next assignment 
 		$changeAssignment = true; 
@@ -10,8 +18,9 @@
 		$code = ""; 
 	}
 
-	const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
-
+	/**
+	 * Fetch the data of new submission, keep fetching until the submission is processed
+	 */
 	const fetchSubmission = async () => {
 		const response = await fetch(`/api/submission/${$submission.id}`, {method: "GET"});
 		$submission = await response.json(); 
@@ -23,7 +32,7 @@
 	}
 </script>
 
-<!-- Submission status -->
+
 {#if $submission != null}
 	{#if $submission.status === "processed"}
 		<div class="space-y-8 pt-8">

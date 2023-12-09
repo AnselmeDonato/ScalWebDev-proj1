@@ -1,14 +1,23 @@
 import * as assignments from "../services/programmingAssignmentService.js";
 import * as submissions from "../services/submissionsService.js";
 
+// Queue of submission waiting to be graded
 const submissionGradingQueue = []; 
 
-const getSubmissionById = async (_request, mappingResult) => {
+/**
+ * Find a submission with its id
+ */
+const findById = async (_request, mappingResult) => {
 	const id = mappingResult.pathname.groups.id;
 	const search_result = await submissions.getById(id);
 	return new Response(JSON.stringify(search_result), { status: 200 })
 };
 
+/**
+ * Process a new submission: 
+ * - if it corresponds to an old one, fetch that old one and return it
+ * - if it's new, create a new submission in db and submit it for grading
+ */
 const processSubmission = async (request, _mappingResult) => {
   const requestData = await request.json();
 
@@ -23,7 +32,7 @@ const processSubmission = async (request, _mappingResult) => {
 		// Create a new submission 
 		const submission = await submissions.create(requestData.assignmentId, requestData.uuid, requestData.code); 
 
-		// Find the data needed to grade the new submission and add it to the const submissionGradingQueue
+		// Find the data needed to grade this new submission and add it to the grading queue
 		const assignment = await assignments.findById(submission.programming_assignment_id);
 		const data = {
 			submissionId: submission.id, 
@@ -38,6 +47,9 @@ const processSubmission = async (request, _mappingResult) => {
 	}
 };
 
+/**
+ * Grades the submissions in the grading queue
+ */
 const processGradingQueue = async () => {
 	while(submissionGradingQueue.length != 0){
 		const data = submissionGradingQueue.pop(); 
@@ -59,4 +71,4 @@ const processGradingQueue = async () => {
 	}
 };
 
-export { processSubmission, getSubmissionById }; 
+export { processSubmission, findById }; 

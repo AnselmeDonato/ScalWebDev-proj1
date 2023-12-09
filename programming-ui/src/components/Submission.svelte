@@ -1,12 +1,12 @@
 <script>
   import { userUuid, code, assignment, submission} from "../stores/stores.js";
 
-	// Used to deactivate the "submit" button while waiting for a response from the grading system 
+	// Used to deactivate the "submit" button while waiting for a response of the server after a submission 
 	let pendingSubmission = false; 
 
-	// 
-	// Submit the written code to the grading system and updates the gradingResult store accordingly
-	// 
+	/**
+	 * Submit the written code to the grading system (and updates the store accordingly)
+	 */
 	const submitCode = async () => {
 		const codeTextArea = document.getElementById("codeTextArea").value;
 
@@ -24,7 +24,7 @@
 			assignmentId: $assignment.id
 		}
 		
-		// Request to submit the code 
+		// Actual request to submit the code 
 		const submissionResponse = await fetch("/api/submit", {
 			method: "POST",
 			headers: {
@@ -52,7 +52,7 @@
 
 <!-- Submit button, only activated if there is no pending submission  -->
 <div class="mt-6 flex items-center gap-x-6">
-	{#if ! pendingSubmission}
+	{#if !pendingSubmission}
 		<button 
 			type="submit" 
 			class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
