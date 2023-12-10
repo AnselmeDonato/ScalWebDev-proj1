@@ -9,9 +9,7 @@ if (!user) {
 const userUuid = readable(user);
 
 // Assignment (saved in LocalStorage)
-let storedAssignment = localStorage.getItem("assignment"); 
-const assignment = writable(JSON.parse(storedAssignment) || {}); 
-assignment.subscribe((json) => {localStorage.setItem("assignment", JSON.stringify(json))}); 
+const assignment = writable({}); 
 
 // "Flag" to go to next assignment
 const changeAssignment = writable(false); 
