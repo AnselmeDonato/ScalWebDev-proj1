@@ -32,13 +32,13 @@ const findById = async (_request, mappingResult) => {
 
 /**
  * Process a new submission: 
- * - if it corresponds to an old one, fetch that old one and return it
+ * - if it corresponds to an old one, use the data from that old one to create the new (without grading it)
  * - if it's new, create a new submission in db and submit it for grading
 */
 const processSubmission = async (request, _mappingResult) => {
 	const requestData = await request.json();
 	
-	// Check if a similar submission (same code and assignment) already exists in db
+	// Check if a similar submission exists
 	const search_results = await submissions.searchWithAttributes(requestData.assignmentId, requestData.code);
 	
 	if(search_results.length != 0) {	

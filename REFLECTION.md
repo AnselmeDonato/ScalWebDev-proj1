@@ -17,13 +17,14 @@ The app is mainly divided in three aprts:
 
 3. The grading-api (provided from the beginning), which grades the submissions. It's only called by the programming-api if necessary, never directly accessed by the ui. 
 
+It has been developped and tested with Firefox
 
 ### Reflection on the work done 
 
 
 For the structure of this quick reflection, I'll simply go through each requirements for passing and briefly detail what I've done
 
-- The front end of the application has been quickly built and styled with Tailwind. In my opinion it looks quite decent and is easily readable and usable. The main thing I would improve about it is the text area in which the user write the code: for now it's just a regular text area and is not very suited for writing code (tabs are not allowed, there is no formatting etc...)
+- The front end of the application has been quickly built and styled with Tailwind. In my opinion it looks quite decent and is easily readable and usable. The main thing I would improve about it is the text area in which the user write the code: for now it's just a regular text area and is not very suited for writing code (tabs are not allowed, there is no formatting etc...). The way grading results are displayed could also use some more formatting: for now it's just the raw text of the result displayed, which is not the easiest to read when there are some errors. 
 
 - When a programming assignment is submitted, the submission is stored into the database table `programming_assignment_submissions` as required, and upon submission submissions with the same assignment and code are looked from the database table. If a matching entry is found, the values fot `submission_status`, `grader_feedback` and `correct` are copied from the matching submission and the code is not sent for grading. Otherwise, the code is added to a gradingQueue. 
 
@@ -31,8 +32,11 @@ For the structure of this quick reflection, I'll simply go through each requirem
 
 - When a user makes a new submission, a new database submission is created with the status 'pending', and the data of that database submission (including in particular its id in database and status) is sent back to the client. Upon receiving the database submission data, if the status is 'pending' the client will wait a second (arbitrary duration to avoid flooding the server with requests) and fetch again the data of the submission in database, using the database id it just received. A separate endpoint is used for that. The user does not need to refresh the page to see the results. 
 
-- The project has both development and production configuration. The production configuration removes the flags `--allow-read` and `--watch`, from Dockerfiles, and stores the content of the database locally in the folder `production-database-data` in order for the data to be persistent. It also runs astro in build mode, and set restars to `on-failure` for the services. 
+- The project has both development and production configuration (cf `RUNNING.md` for how to run in prod mode). The production configuration removes the flags `--allow-read` and `--watch`, from Dockerfiles, and stores the content of the database locally in the folder `production-database-data` in order for the data to be persistent. It also runs astro in build mode, and set restars to `on-failure` for the services. 
 
 - There are three Playwright tests to check the basic functionalities of the application 
 
 - There are some performances tests done with k6, ro measure the performance of loading the assignment page and submitting assignments. You can find their results in the file `PERFORMANCE_TEST_RESULTS.md`
+
+
+This assignment just includes the requirements for passing. Besides the possible improvements already mentionned above, ameliorations of this project could also include all the requirements for passing with merits. 

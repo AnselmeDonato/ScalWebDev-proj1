@@ -1,10 +1,16 @@
 import { readable, writable } from "svelte/store";
 
+// Code (saved in LocalStorage)
+let storedCode = localStorage.getItem("code"); 
+const code = writable(storedCode || ""); 
+code.subscribe((value) => {localStorage.setItem("code", value)}); 
+
 // User id (saved in LocalStorage)
 let user = localStorage.getItem("userUuid");
 if (!user) {
   user = crypto.randomUUID().toString();
   localStorage.setItem("userUuid", user);
+  localStorage.setItem("code", "");
 } 
 const userUuid = readable(user);
 
@@ -14,10 +20,6 @@ const assignment = writable({});
 // "Flag" to go to next assignment
 const changeAssignment = writable(false); 
 
-// Code (saved in LocalStorage)
-let storedCode = localStorage.getItem("code"); 
-const code = writable(storedCode || ""); 
-code.subscribe((value) => {localStorage.setItem("code", value)}); 
 
 // Submission 
 const submission = writable(null); 
