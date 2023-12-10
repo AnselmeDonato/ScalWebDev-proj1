@@ -57,8 +57,6 @@ const processSubmission = async (request, _mappingResult) => {
 			code: requestData.code,
 		};
 		await gradingQueue.enqueue(data); 
-		// submissionGradingQueue.unshift(data); 
-		// processGradingQueue(); 
 		
 		// Return the submission info
 		return new Response(JSON.stringify(submission), { status: 200 })
