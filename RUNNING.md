@@ -9,6 +9,6 @@ In order to locally run the application, do the following:
 		- run `docker build -t grader-image .` (or follow the README.md there)
 - run the application: 
     - (go back to the root folder of the code)
-		- run `docker compose up --build`
+		- run `docker compose up --build` for running in dev mode (or `docker compose -f docker-compose.prod.yml up` for prod mode)
 
 The application is then available at `localhsot:7800`

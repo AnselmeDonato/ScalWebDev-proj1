@@ -24,7 +24,7 @@ const urlMapping = [
 	  fn: submissionsController.processSubmission,
 	},
 	
-	// Get submission by id
+	// Get submission by id (when client checks for updates on the submission)
 	{
 		method: "GET",
 		pattern: new URLPattern({ pathname: "/submission/:id" }),
