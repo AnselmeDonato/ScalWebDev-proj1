@@ -1,4 +1,4 @@
-import * as assignmentsService from "../services/programmingAssignmentService.js";
+import * as assignmentsService from "../services/AssignmentService.js";
 import { responseDetails } from "../utils/requestUtils.js"; 
 
 /**

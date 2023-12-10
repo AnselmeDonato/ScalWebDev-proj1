@@ -1,4 +1,4 @@
-import * as assignments from "../services/programmingAssignmentService.js";
+import * as assignments from "../services/AssignmentService.js";
 import * as submissions from "../services/submissionsService.js";
 
 // Queue of submission waiting to be graded
