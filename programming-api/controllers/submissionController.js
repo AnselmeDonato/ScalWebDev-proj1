@@ -38,12 +38,14 @@ const findById = async (_request, mappingResult) => {
 const processSubmission = async (request, _mappingResult) => {
 	const requestData = await request.json();
 	
-	// Check if a similar submission (same code, user and assignment) already exists in db
-	const search_results = await submissions.searchWithAttributes(requestData.assignmentId, requestData.uuid, requestData.code);
+	// Check if a similar submission (same code and assignment) already exists in db
+	const search_results = await submissions.searchWithAttributes(requestData.assignmentId, requestData.code);
 	
-	if(search_results.length != 0) {		
-		// Return the already existing submission 
-		return new Response(JSON.stringify(search_results[0]), { status: 200 })
+	if(search_results.length != 0) {	
+		// Copy the info of the existing submission into the new one
+		const new_submission = await submissions.createWithAttributes(requestData.assignmentId, requestData.code, requestData.uuid, search_results[0].grader_feedback, search_results[0].correct); 
+		console.log(new_submission); 
+		return new Response(JSON.stringify(new_submission), { status: 200 })
 	}
 	else {
 		// Create a new submission 
